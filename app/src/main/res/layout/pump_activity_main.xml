@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context="ie.setu.pumpitup.activities.MainActivity">
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,6 +51,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
+                <Spinner
+                    android:id="@+id/coursesspinner"
+                    android:layout_height="50dp"
+                    android:layout_width="200dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
                 <EditText
                     android:id="@+id/station"
                     android:layout_width="match_parent"
@@ -61,7 +75,10 @@
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
+
+
+
 
                 <EditText
                     android:id="@+id/petrol"
@@ -70,7 +87,7 @@
                     android:layout_margin="8dp"
                     android:autofillHints="hint"
                     android:hint="@string/hint_petrol_price"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"
@@ -84,7 +101,7 @@
                     android:layout_margin="8dp"
                     android:autofillHints="hint"
                     android:hint="@string/hint_diesel_price"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"

@@ -1,39 +1,36 @@
 package ie.setu.pumpitup.activities
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.i
-import android.widget.Button
-import android.widget.ImageView
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.*
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import ie.setu.pumpitup.R
+import ie.setu.pumpitup.databinding.PumpActivityListBinding
 import ie.setu.pumpitup.models.PumpModel
 import ie.setu.pumpitup.databinding.PumpActivityMainBinding
-
+import ie.setu.pumpitup.helpers.resIdByName
 import ie.setu.pumpitup.main.MainApp
-
-import timber.log.Timber
 import timber.log.Timber.i
 
-val imagesList: ArrayList<Pair<String, Int>> = arrayListOf(
-    Pair("Amber",R.drawable.amber),
-    Pair("AppleGreen",R.drawable.apple),
-    Pair("Circle-K",R.drawable.circlek),
-    Pair("Inver",R.drawable.inver),
-    Pair("Morris",R.drawable.morris),
-    Pair("Shell",R.drawable.shell),
-    Pair("Texaco",R.drawable.texaco),
-    Pair("Top Oil", R.drawable.top),
-    // Add more images as needed
-)
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: PumpActivityMainBinding
     var pump = PumpModel()
     lateinit var app: MainApp
+
+    var courses = arrayOf<String?>("Select Station","Amber", "Apple Green",
+        "Circle K", "Inver",
+        "Morris", "Shell","Texaco","Top Oil","Emo")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,17 +39,29 @@ class MainActivity : AppCompatActivity() {
         binding = PumpActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
+
+        binding = PumpActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         app = application as MainApp
         i("Main Activity started...")
-
-        binding.btnAdd .setOnClickListener() {
+        ImageHashMap.loadImages()
+        binding.btnAdd.setOnClickListener() {
             pump.station = binding.station.text.toString()
-            pump.petrol = binding.petrol.text.toString()
-            pump.diesel = binding.diesel.text.toString()
+            pump.petrol = binding.petrol.text.toString().toDouble()
+            pump.diesel = binding.diesel.text.toString().toDouble()
             pump.eircode = binding.eircode.text.toString()
             pump.address = binding.address.text.toString()
+            pump.image =
+                ImageHashMap.getImage(binding.coursesspinner.selectedItem.toString()).toString()
 
-            if (pump.station.isNotEmpty()&& pump.petrol.isNotEmpty() && pump.diesel.isNotEmpty() && pump.eircode.isNotEmpty()) {
+
+
+            if (pump.station.isNotEmpty() && pump.eircode.isNotEmpty() && binding.petrol.text.toString()
+                    .isNotEmpty() && binding.diesel.text.toString().isNotEmpty()
+            ) {
                 app.stations.add(pump.copy())
                 i("add Button Pressed: $pump")
                 for (i in app.stations.indices) {
@@ -60,34 +69,89 @@ class MainActivity : AppCompatActivity() {
                 }
                 setResult(RESULT_OK)
                 finish()
-            }
-            else {
+            } else {
                 Snackbar
-                    .make(it,"Please enter the name of the Station", Snackbar.LENGTH_LONG)
+                    .make(it, "Please enter the name of the Station", Snackbar.LENGTH_LONG)
                     .show()
             }
         }
 
-        // Get reference to the button
-        val cancelButton = findViewById<Button>(R.id.activity_cancelAddPump)
-            cancelButton.background = ContextCompat.getDrawable(this, R.drawable.button_background)
 
-// Set an OnClickListener for the button
-        cancelButton.setOnClickListener {
-            // Code to return to the main menu
-            val mainMenuIntent = Intent(this, PumpListActivity::class.java)
-            startActivity(mainMenuIntent)
-        }
 
+
+
+//            val shape = GradientDrawable()
+//            shape.shape = GradientDrawable.RECTANGLE
+//            shape.setColor(Color.WHITE)
+//            shape.setStroke(10, Color.WHITE)
+//            shape.cornerRadius = 50f
+//            cancelButton.background = shape
+
+
+
+
+//        SPINNER FOR STATION NAMES THAT WILL
+//        ALSO ASSIGN CORRECT PETROL STATION IMAGE TO THAT ITEM ADDED
+
+        val spin = findViewById<Spinner>(R.id.coursesspinner)
+        spin.onItemSelectedListener = this
+
+        // Create the instance of ArrayAdapter
+        // having the list of courses
+        val ad: ArrayAdapter<*> = ArrayAdapter<Any?>(
+            this,
+            android.R.layout.simple_spinner_item,
+            courses)
+
+        // set simple layout resource file
+        // for each item of spinner
+        ad.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item)
+
+        // Set the ArrayAdapter (ad) data on the
+        // Spinner which binds data to spinner
+        spin.adapter = ad
+        spin.setSelection(0)
     }
 
-    fun getImage(title: String): Int {
-        for (pair in imagesList) {
-            if (pair.first == title) {
-                return pair.second
+    override fun onItemSelected(parent: AdapterView<*>?,
+                                view: View, position: Int,
+                                id: Long) {
+        // make toastof name of course
+        // which is selected in spinner
+        Toast.makeText(applicationContext,
+            courses[position],
+            Toast.LENGTH_LONG)
+            .show()
+        binding.station.setText(courses[position])
+        //val drawableResId = this.resIdByName(imageName, "drawable")
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cancel -> {
+                finish()
             }
         }
-        return 0
+        return super.onOptionsItemSelected(item)
     }
 
+
+
+
+
+
 }
+
+
+
+
+
+
