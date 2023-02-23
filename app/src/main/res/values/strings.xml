@@ -1,3 +1,28 @@
 <resources>
-    <string name="app_name">pumpItUp</string>
+    <string name="app_name">PumpItUp</string>
+    <string name="btn_addStation">Add Station</string>
+
+    <string name="hint_station_name">Station Name</string>
+    <string name="hint_petrol_price">Petrol Price</string>
+    <string name="hint_diesel_price">Diesel Price</string>
+    <string name="hint_eircode">Eircode</string>
+    <string name="hint_address">Address</string>
+
+    <string name="title_pump_activity_list">PumpListActivity</string>
+
+    <string name="menu_addPump">Add</string>
+    <string name="activity_cancelAddPump">Cancel</string>    //Cancel Button when on main activity
+
+
+    <string-array name="stationNames">
+        <item> Amber </item>
+        <item> Apple Green </item>
+        <item> Circle K </item>
+        <item> Inver </item>
+        <item> Morris </item>
+        <item> Shell </item>
+        <item> Texaco </item>
+        <item> Top Oil </item>
+        <item> Emo </item>
+    </string-array>
 </resources>
