@@ -21,27 +21,3 @@ data class PumpModel( var id: Long = 0,
 
 ) : Serializable, Parcelable
 
-private const val STATIONS_FILE = "stations.json"
-
-// Load the list of stations from the JSON file
-fun loadStations(context: Context): MutableList<PumpModel> {
-    val file = File(context.filesDir, STATIONS_FILE)
-    if (!file.exists()) {
-        return mutableListOf()
-    }
-    val json = file.readText()
-    val type = object : TypeToken<List<PumpModel>>() {}.type
-    return Gson().fromJson(json, type)
-}
-
-// Save the list of stations to the JSON file
-fun saveStations(context: Context, stations: List<PumpModel>) {
-    val file = File(context.filesDir, STATIONS_FILE)
-    val json = Gson().toJson(stations)
-    try {
-        file.writeText(json)
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-}
-

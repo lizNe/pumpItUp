@@ -17,8 +17,7 @@ import ie.setu.pumpitup.databinding.PumpActivityMainBinding
 import ie.setu.pumpitup.helpers.resIdByName
 import ie.setu.pumpitup.main.MainApp
 import ie.setu.pumpitup.models.Users
-import ie.setu.pumpitup.models.loadStations
-import ie.setu.pumpitup.models.saveStations
+
 import timber.log.Timber.i
 
 
@@ -32,13 +31,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         "Circle K", "Inver",
         "Morris", "Shell","Texaco","Top Oil","Emo")
 
-    val stations = loadStations(this)
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var edit = false
 
         binding = PumpActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -48,14 +46,18 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         ImageHashMap.loadImages()
 
         if (intent.hasExtra("station_edit")) {
+            edit=true
             pump = intent.extras?.getParcelable("station_edit")!!
             binding.station.setText(pump.station)
             binding.petrol.setText(pump.petrol.toString())
             binding.diesel.setText(pump.diesel.toString())
             binding.eircode.setText(pump.eircode)
             binding.address.setText(pump.address)
+            binding.btnAdd.setText(R.string.edit_activity)
             //    binding.image.getImage(pump.image)
         }
+
+        // val stations = app.stations.loadStations(this)
 
         binding.btnAdd.setOnClickListener() {
             pump.station = binding.station.text.toString()
@@ -68,19 +70,27 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
 
             if (pump.station.isNotEmpty()  && pump.eircode.isNotEmpty() && binding.petrol.text.toString().isNotEmpty() && binding.diesel.text.toString().isNotEmpty() ) {
-                app.stations.create(pump.copy())
+                if (edit) {
+                    app.stations.update(pump.copy())
+                } else {
+                    app.stations.create(pump.copy())
+                }
+                app.stations.saveStations(this, app.stations.findAll())
                 i("add Button Pressed: $pump")
                 setResult(RESULT_OK)
                 finish()
+
             } else {
                 Snackbar
-                    .make(it, "Please enter the name of the Station", Snackbar.LENGTH_LONG)
+                    .make(it, R.string.enter_station_title, Snackbar.LENGTH_LONG)
                     .show()
-
-
             }
 
+
+
+
         }
+
 
         // Get reference to the button
         val cancelButton = findViewById<Button>(R.id.activity_cancelAddPump)
@@ -124,7 +134,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         spin.adapter = ad
         spin.setSelection(0)
 
-        saveStations(this, app.stations.findAll())
+        // app.stations.saveStations(this, app.stations.findAll())
     }
 
     override fun onItemSelected(parent: AdapterView<*>?,

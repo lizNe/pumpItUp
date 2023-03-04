@@ -46,7 +46,10 @@
         android:id="@+id/imageView"
         android:layout_width="163dp"
         android:layout_height="194dp"
-        app:srcCompat="@android:drawable/ic_menu_compass"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="137dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.165"
+        app:srcCompat="@android:drawable/ic_menu_compass" />
 </androidx.constraintlayout.widget.ConstraintLayout>

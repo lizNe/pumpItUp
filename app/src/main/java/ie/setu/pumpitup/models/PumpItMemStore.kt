@@ -1,15 +1,21 @@
 package ie.setu.pumpitup.models
 
+import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import timber.log.Timber.i
+import java.io.File
+import java.io.IOException
 
 var lastId = 0L
+private const val STATIONS_FILE = "stations.json"
 
 internal fun getId(): Long{
     return lastId++
 }
 
 class PumpItMemStore : PumpItStore {
-    val stations = ArrayList<PumpModel>()
+    var stations = ArrayList<PumpModel>()
 
     override fun findAll(): List<PumpModel> {
         return stations
@@ -18,6 +24,7 @@ class PumpItMemStore : PumpItStore {
     override fun create(station: PumpModel) {
         station.id = getId()
         stations.add(station)
+        // saveStations(, findAll())
         logAll()
     }
 
@@ -31,6 +38,33 @@ class PumpItMemStore : PumpItStore {
             foundStation.address = station.address
             foundStation.image = station.image
             logAll()
+        }
+    }
+
+
+
+    // Load the list of stations from the JSON file
+    fun loadStations(context: Context): MutableList<PumpModel> {
+        val file = File(context.filesDir, STATIONS_FILE)
+        if (!file.exists()) {
+            return mutableListOf()
+        }
+        val json = file.readText()
+        val type = object : TypeToken<List<PumpModel>>() {}.type
+
+        //   need to call station and assign the gson and json file to it to actually display the stations
+        stations = Gson().fromJson(json, type)
+        return Gson().fromJson(json, type)
+    }
+
+    // Save the list of stations to the JSON file
+    fun saveStations(context: Context, stations: List<PumpModel>) {
+        val file = File(context.filesDir, STATIONS_FILE)
+        val json = Gson().toJson(stations)
+        try {
+            file.writeText(json)
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 
