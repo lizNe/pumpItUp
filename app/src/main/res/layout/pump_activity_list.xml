@@ -7,6 +7,30 @@
     android:layout_height="match_parent"
     tools:context="ie.setu.pumpitup.activities.PumpListActivity">
 
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:hint="@string/welcome_text"
+        android:padding="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/welcome_list"
+        android:layout_width="380dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="90dp"
+        android:hint="@string/welcome_text2"
+        android:padding="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25sp"
+        app:layout_anchor="@+id/welcome_list"
+        />
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,9 +48,26 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:layout_marginTop="250dp"
+        android:layout_marginBottom="70dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="124dp"
+        android:layout_height="wrap_content"
+        android:text="@string/logout_text"
+        app:layout_anchor="@+id/bottomAppBar"
+        app:layout_anchorGravity="center" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

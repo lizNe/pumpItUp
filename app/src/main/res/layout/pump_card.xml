@@ -62,5 +62,20 @@
             android:textSize="20sp"
             tools:text="address" />
 
+        <TextView
+            android:id="@+id/delete_txt"
+            android:layout_width="380dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="55dp"
+            android:padding="15dp"
+            android:textAppearance="@style/TextAppearance.Compat.Notification.Title"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="25sp"
+            android:visibility="invisible" />
+
+        />
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
