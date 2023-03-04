@@ -7,18 +7,18 @@ import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.i
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import ie.setu.pumpitup.R
-import ie.setu.pumpitup.databinding.PumpActivityListBinding
 import ie.setu.pumpitup.models.PumpModel
 import ie.setu.pumpitup.databinding.PumpActivityMainBinding
 import ie.setu.pumpitup.helpers.resIdByName
 import ie.setu.pumpitup.main.MainApp
+import ie.setu.pumpitup.models.Users
+import ie.setu.pumpitup.models.loadStations
+import ie.setu.pumpitup.models.saveStations
 import timber.log.Timber.i
 
 
@@ -32,15 +32,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         "Circle K", "Inver",
         "Morris", "Shell","Texaco","Top Oil","Emo")
 
+    val stations = loadStations(this)
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = PumpActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
 
         binding = PumpActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -48,47 +46,60 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         app = application as MainApp
         i("Main Activity started...")
         ImageHashMap.loadImages()
+
+        if (intent.hasExtra("station_edit")) {
+            pump = intent.extras?.getParcelable("station_edit")!!
+            binding.station.setText(pump.station)
+            binding.petrol.setText(pump.petrol.toString())
+            binding.diesel.setText(pump.diesel.toString())
+            binding.eircode.setText(pump.eircode)
+            binding.address.setText(pump.address)
+            //    binding.image.getImage(pump.image)
+        }
+
         binding.btnAdd.setOnClickListener() {
             pump.station = binding.station.text.toString()
             pump.petrol = binding.petrol.text.toString().toDouble()
             pump.diesel = binding.diesel.text.toString().toDouble()
             pump.eircode = binding.eircode.text.toString()
             pump.address = binding.address.text.toString()
-            pump.image =
-                ImageHashMap.getImage(binding.coursesspinner.selectedItem.toString()).toString()
+            pump.image= ImageHashMap.getImage(binding.coursesspinner.selectedItem.toString()).toString()
 
 
 
-            if (pump.station.isNotEmpty() && pump.eircode.isNotEmpty() && binding.petrol.text.toString()
-                    .isNotEmpty() && binding.diesel.text.toString().isNotEmpty()
-            ) {
-                app.stations.add(pump.copy())
+            if (pump.station.isNotEmpty()  && pump.eircode.isNotEmpty() && binding.petrol.text.toString().isNotEmpty() && binding.diesel.text.toString().isNotEmpty() ) {
+                app.stations.create(pump.copy())
                 i("add Button Pressed: $pump")
-                for (i in app.stations.indices) {
-                    i("Station[$i]:${this.app.stations[i]}")
-                }
                 setResult(RESULT_OK)
                 finish()
             } else {
                 Snackbar
                     .make(it, "Please enter the name of the Station", Snackbar.LENGTH_LONG)
                     .show()
+
+
             }
+
         }
 
+        // Get reference to the button
+        val cancelButton = findViewById<Button>(R.id.activity_cancelAddPump)
+        cancelButton.background = ContextCompat.getDrawable(this, R.drawable.button_background)
+
+        val shape = GradientDrawable()
+        shape.shape = GradientDrawable.RECTANGLE
+        shape.setColor(Color.WHITE)
+        shape.setStroke(10, Color.WHITE)
+        shape.cornerRadius = 50f
+        cancelButton.background = shape
 
 
-
-
-//            val shape = GradientDrawable()
-//            shape.shape = GradientDrawable.RECTANGLE
-//            shape.setColor(Color.WHITE)
-//            shape.setStroke(10, Color.WHITE)
-//            shape.cornerRadius = 50f
-//            cancelButton.background = shape
-
-
-
+        // Set an OnClickListener for the button
+        cancelButton.setOnClickListener {
+            // Code to return to the main menu
+            val mainMenuIntent = Intent(this, PumpListActivity::class.java)
+            startActivity(mainMenuIntent)
+        }
 
 //        SPINNER FOR STATION NAMES THAT WILL
 //        ALSO ASSIGN CORRECT PETROL STATION IMAGE TO THAT ITEM ADDED
@@ -112,6 +123,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // Spinner which binds data to spinner
         spin.adapter = ad
         spin.setSelection(0)
+
+        saveStations(this, app.stations.findAll())
     }
 
     override fun onItemSelected(parent: AdapterView<*>?,
@@ -129,29 +142,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_cancel -> {
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-
-
-
 
 
 }
-
-
-
-
 
 
