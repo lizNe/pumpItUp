@@ -135,7 +135,7 @@
                     android:layout_height="45dp"
                     android:layout_margin="8dp"
                     android:autofillHints="hint"
-                    android:text="@string/hint_address"
+                    android:hint="@string/hint_address"
                     android:background="#FFFFFF"
                     android:inputType="text"
                     android:maxLength="25"

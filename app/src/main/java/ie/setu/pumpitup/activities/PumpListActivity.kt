@@ -109,10 +109,11 @@ class PumpListActivity: AppCompatActivity(), PumpItListener {
         }
 
 
-    private fun deleteStation(station: PumpModel) {
+    private fun deleteStation(station: PumpModel, position: Int) {
         app.stations.delete(station)
-        app.stations.saveStations(this,stations)
-        (binding.recyclerView.adapter as PumpAdapters).notifyDataSetChanged()
+        app.stations.saveStations(this,app.stations.findAll())
+        (binding.recyclerView.adapter as PumpAdapters).notifyItemRemoved(position)
+
     }
 
 
@@ -122,10 +123,12 @@ class PumpListActivity: AppCompatActivity(), PumpItListener {
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            deleteStation(app.stations.findAll()[viewHolder.adapterPosition])
+            val position = viewHolder.adapterPosition
+            deleteStation(app.stations.findAll()[position], position)
         }
     }
 //https://github.com/mitchtabian/SQLite-for-Beginners-2019/blob/master/app/src/main/java/com/codingwithmitch/notes/NotesListActivity.java
+
 
 
 }
