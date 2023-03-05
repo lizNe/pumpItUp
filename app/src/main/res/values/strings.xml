@@ -37,4 +37,6 @@
     <string name="welcome_text">Welcome to PumpItUp! \n</string>
     <string name="welcome_text2">Here is a list of you Stations \n</string>
     <string name="title_activity_display">DisplayActivity</string>
+
+    <string name="my_spinner_hint">Address</string>
 </resources>

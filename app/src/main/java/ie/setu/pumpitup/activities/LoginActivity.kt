@@ -22,6 +22,8 @@ class LoginActivity : AppCompatActivity() {
         var login = findViewById(R.id.login_button) as Button
 
 
+
+
         // set on-click listener
         login.setOnClickListener {
             val userEmail = email.text.toString()

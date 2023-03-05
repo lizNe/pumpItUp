@@ -21,4 +21,9 @@ class MainApp : Application() {
         //stations.add(PumpModel("Three", "About three..."))
 
     }
+
+    fun logout() {
+        // Clear the current user session here
+    }
+
 }
