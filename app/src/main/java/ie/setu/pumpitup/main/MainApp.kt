@@ -1,7 +1,9 @@
 package ie.setu.pumpitup.main
 
 import android.app.Application
+import android.content.Intent
 import android.util.Log.i
+import ie.setu.pumpitup.activities.LoginActivity
 import ie.setu.pumpitup.models.PumpItMemStore
 import ie.setu.pumpitup.models.PumpModel
 import timber.log.Timber
@@ -24,6 +26,9 @@ class MainApp : Application() {
 
     fun logout() {
         // Clear the current user session here
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
 }

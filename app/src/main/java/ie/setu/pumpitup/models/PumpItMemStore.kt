@@ -14,7 +14,7 @@ internal fun getId(): Long{
     return lastId++
 }
 
-class PumpItMemStore : PumpItStore {
+class PumpItMemStore  : PumpItStore {
     var stations = ArrayList<PumpModel>()
 
     override fun findAll(): List<PumpModel> {
@@ -24,7 +24,6 @@ class PumpItMemStore : PumpItStore {
     override fun create(station: PumpModel) {
         station.id = getId()
         stations.add(station)
-        // saveStations(, findAll())
         logAll()
     }
 
@@ -41,7 +40,10 @@ class PumpItMemStore : PumpItStore {
         }
     }
 
-
+    override fun delete(station: PumpModel) {
+        stations.remove(station)
+        logAll()
+    }
 
     // Load the list of stations from the JSON file
     fun loadStations(context: Context): MutableList<PumpModel> {

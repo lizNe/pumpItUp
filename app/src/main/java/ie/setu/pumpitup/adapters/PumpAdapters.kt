@@ -32,6 +32,11 @@ class PumpAdapters constructor(private var stations: List<PumpModel>, private va
         
     }
 
+    fun setData(newData: List<PumpModel>) {
+        stations = newData
+    }
+
+
     override fun getItemCount(): Int = stations.size
 
     class MainHolder(private val binding: PumpCardBinding, private val context: Context) :
