@@ -85,8 +85,21 @@ class PumpListActivity: AppCompatActivity(), PumpItListener {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
 
+
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String): Boolean {
+                (binding.recyclerView.adapter as PumpAdapters).filter.filter(newText)
+                return true
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 
 

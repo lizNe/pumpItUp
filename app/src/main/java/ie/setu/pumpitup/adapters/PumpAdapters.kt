@@ -3,12 +3,16 @@ package ie.setu.pumpitup.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ie.setu.pumpitup.R
 import ie.setu.pumpitup.databinding.PumpCardBinding
 import ie.setu.pumpitup.helpers.resIdByName
 import ie.setu.pumpitup.models.PumpModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 interface PumpItListener {
@@ -17,7 +21,9 @@ interface PumpItListener {
 
 
 class PumpAdapters constructor(private var stations: List<PumpModel>, private val listener: PumpItListener) :
-    RecyclerView.Adapter<PumpAdapters.MainHolder>() {
+    RecyclerView.Adapter<PumpAdapters.MainHolder>(), Filterable{
+
+    private var filteredStations: List<PumpModel> = stations
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = PumpCardBinding
@@ -27,7 +33,7 @@ class PumpAdapters constructor(private var stations: List<PumpModel>, private va
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val station = stations[holder.adapterPosition]
+        val station = filteredStations[holder.adapterPosition]
         holder.bind(station, listener)
         
     }
@@ -37,7 +43,8 @@ class PumpAdapters constructor(private var stations: List<PumpModel>, private va
     }
 
 
-    override fun getItemCount(): Int = stations.size
+    override fun getItemCount(): Int = filteredStations.size
+
 
     class MainHolder(private val binding: PumpCardBinding, private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
@@ -64,4 +71,35 @@ class PumpAdapters constructor(private var stations: List<PumpModel>, private va
             }
         }
     }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = ArrayList<PumpModel>()
+                if (constraint == null || constraint.isEmpty()) {
+                    filteredList.addAll(stations)
+                } else {
+                    val filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim()
+                    for (station in stations) {
+                        if (station.station.toLowerCase(Locale.ROOT).contains(filterPattern)
+                            || station.address.toLowerCase(Locale.ROOT).contains(filterPattern)
+                            || station.eircode.toLowerCase(Locale.ROOT).contains(filterPattern)) {
+                            filteredList.add(station)
+                        }
+                    }
+                }
+                val results = FilterResults()
+                results.values = filteredList
+                return results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredStations = results?.values as List<PumpModel>
+                notifyDataSetChanged()
+            }
+        }
+    }
 }
+//Filter / Search reference
+// https://www.youtube.com/watch?v=K5YnTvsVPRk
+
