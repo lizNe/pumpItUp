@@ -13,6 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PumpItUp"
         tools:targetApi="31">
+        <activity
+            android:name=".DrawerBaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:exported="true"
+            android:label="@string/title_activity_dashboard"
+            android:theme="@style/Theme.PumpItUp.NoActionBar">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
 
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -36,13 +50,9 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".activities.PumpListActivity"></activity>
+        <activity android:name=".activities.PumpListActivity" />
         <activity android:name=".activities.MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
