@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.util.Log.i
 import android.view.View
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import ie.setu.pumpitup.R
@@ -16,6 +18,7 @@ import ie.setu.pumpitup.models.PumpModel
 import ie.setu.pumpitup.databinding.PumpActivityMainBinding
 import ie.setu.pumpitup.helpers.resIdByName
 import ie.setu.pumpitup.main.MainApp
+import ie.setu.pumpitup.models.Location
 import ie.setu.pumpitup.models.Users
 
 import timber.log.Timber.i
@@ -23,6 +26,7 @@ import timber.log.Timber.i
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var binding: PumpActivityMainBinding
     var pump = PumpModel()
     lateinit var app: MainApp
@@ -31,6 +35,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         "Circle K", "Inver",
         "Morris", "Shell","Texaco","Top Oil","Emo")
 
+    var location = Location(52.245696, -7.139102, 15f)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +45,20 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         binding = PumpActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+////        Map Binding
+      /* binding.stationLocation.setOnClickListener {
+            i ("Set Location Pressed")
+       }*/
+        registerMapCallback()
+        binding.stationLocation.setOnClickListener {
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
+
+
 
         app = application as MainApp
         i("Main Activity started...")
@@ -135,6 +154,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         spin.setSelection(0)
 
         // app.stations.saveStations(this, app.stations.findAll())
+
+
+
     }
 
     override fun onItemSelected(parent: AdapterView<*>?,
@@ -151,6 +173,24 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            i("Location == $location")
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
 
 
 

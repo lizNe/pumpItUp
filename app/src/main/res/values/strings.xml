@@ -58,8 +58,8 @@
     <string name="menu_drawer_open">Drawer Open</string>
     <string name="menu_drawer_close">Drawer Closed</string>
 
-
-
+    <string name="button_location">Set Location</string>
+    <string name="title_activity_map">MapActivity</string>
 
 
 </resources>

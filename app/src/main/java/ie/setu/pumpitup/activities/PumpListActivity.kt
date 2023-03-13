@@ -81,6 +81,7 @@ class PumpListActivity: AppCompatActivity(), PumpItListener {
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

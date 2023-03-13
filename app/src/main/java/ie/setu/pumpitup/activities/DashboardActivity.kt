@@ -1,10 +1,13 @@
 package ie.setu.pumpitup.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import ie.setu.pumpitup.R
 import ie.setu.pumpitup.databinding.ActivityDashboardBinding
@@ -12,6 +15,7 @@ import ie.setu.pumpitup.databinding.ActivityDashboardBinding
 class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var activityDashboardBinding: ActivityDashboardBinding
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +38,26 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 // Set up the navigation view
         activityDashboardBinding.navView.setNavigationItemSelectedListener(this)
-
+        drawerLayout = activityDashboardBinding.drawerLayout
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation item selected events here
-        return true
+        when (item.itemId) {
+            R.id.first_item -> {
+                // Handle home screen
+                val newI = Intent(this, MainActivity::class.java )
+                startActivity(newI)
+                drawerLayout.closeDrawer(GravityCompat.START)
+                return true
+            }
+            R.id.second_item -> {
+                // Handle settings screen
+                drawerLayout.closeDrawer(GravityCompat.START)
+                return true
+            }
+            // Handle other menu items
+            else -> return false
+        }
     }
 }
 

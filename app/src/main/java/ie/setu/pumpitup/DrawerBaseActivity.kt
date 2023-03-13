@@ -1,5 +1,6 @@
 package ie.setu.pumpitup
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import ie.setu.pumpitup.R
+import ie.setu.pumpitup.activities.MainActivity
 
 class DrawerBaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +38,8 @@ class DrawerBaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         when (item.itemId) {
             R.id.first_item -> {
                 // Handle home screen
+                val newI = Intent(this, MainActivity::class.java )
+               startActivity(newI)
                 drawerLayout.closeDrawer(GravityCompat.START)
                 return true
             }

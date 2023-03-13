@@ -156,6 +156,19 @@
                     android:text="@string/btn_addStation"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/stationLocation"
+                    android:background="@drawable/button_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/button_location"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
             </LinearLayout>
         </ScrollView>
 
