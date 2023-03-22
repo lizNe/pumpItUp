@@ -9,6 +9,8 @@
     <string name="hint_address">Address</string>
 
     <string name="title_pump_activity_list">PumpListActivity</string>
+    <string name="title_pump_activity_main">MainActivity</string>
+
 
     <string name="menu_addPump">Add</string>
     <string name="activity_cancelAddPump">Cancel</string>
@@ -60,6 +62,9 @@
 
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_nav">NavActivity</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 
 </resources>

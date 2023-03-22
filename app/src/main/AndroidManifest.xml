@@ -13,7 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PumpItUp"
         tools:targetApi="31">
-
+        <activity
+            android:name=".NavActivity"
+            android:exported="false"
+            android:label="@string/title_activity_nav"
+            android:theme="@style/Theme.PumpItUp.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -22,8 +26,20 @@
         <activity
             android:name=".activities.MapActivity"
             android:exported="true"
-            android:label="@string/title_activity_map" >
+            android:label="@string/title_activity_map" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:exported="true"
+            android:label="@string/title_pump_activity_main" />
+        <activity
+            android:name=".activities.PumpListActivity"
+            android:exported="true"
+            android:label="@string/title_pump_activity_list">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".DrawerBaseActivity"
@@ -36,20 +52,10 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true" />
-        <activity android:name=".activities.PumpListActivity" />
-        <activity
-            android:name=".activities.MainActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="" />
     </application>
 
 </manifest>

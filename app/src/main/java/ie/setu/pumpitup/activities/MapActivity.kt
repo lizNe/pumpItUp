@@ -17,7 +17,7 @@ import ie.setu.pumpitup.databinding.ActivityMapBinding
 import ie.setu.pumpitup.models.Location
 
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarkerDragListener {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
 
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapBinding
@@ -41,6 +41,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarker
             .draggable(true)
             .position(loc)
         map.addMarker(options)
+        map.setOnMarkerClickListener(this)
         map.setOnMarkerDragListener(this)
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
     }
@@ -61,5 +62,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarker
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
         super.onBackPressed()
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val loc = LatLng(location.lat, location.lng)
+        marker.snippet = "GPS : $loc"
+        return false
     }
 }

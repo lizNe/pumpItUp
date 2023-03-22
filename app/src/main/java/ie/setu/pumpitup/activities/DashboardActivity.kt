@@ -44,7 +44,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.first_item -> {
-                // Handle home screen
+                // Handle main screen
                 val newI = Intent(this, MainActivity::class.java )
                 startActivity(newI)
                 drawerLayout.closeDrawer(GravityCompat.START)

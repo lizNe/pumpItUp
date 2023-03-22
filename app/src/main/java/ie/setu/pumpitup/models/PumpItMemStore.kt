@@ -36,6 +36,9 @@ class PumpItMemStore  : PumpItStore {
             foundStation.eircode = station.eircode
             foundStation.address = station.address
             foundStation.image = station.image
+            foundStation.lat = station.lat
+            foundStation.lng = station.lng
+            foundStation.zoom = station.zoom
             logAll()
         }
     }

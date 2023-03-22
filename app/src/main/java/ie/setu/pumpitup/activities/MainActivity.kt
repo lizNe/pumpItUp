@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         "Circle K", "Inver",
         "Morris", "Shell","Texaco","Top Oil","Emo")
 
-    var location = Location(52.245696, -7.139102, 15f)
+   // var location = Location(52.245696, -7.139102, 15f)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +52,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
        }*/
         registerMapCallback()
         binding.stationLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (pump.zoom != 0f) {
+                location.lat =  pump.lat
+                location.lng = pump.lng
+                location.zoom = pump.zoom
+            }
+
             val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
@@ -183,8 +190,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            location = result.data!!.extras?.getParcelable("location")!!
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
                             i("Location == $location")
+                            pump.lat = location.lat
+                            pump.lng = location.lng
+                            pump.zoom = location.zoom
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
