@@ -50,8 +50,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_main">Add Stations</string>
     <string name="menu_stations_list">Stations List</string>
+    <string name="menu_pumplist">PumpList</string>
+    <string name="menu_drive">Driving 101</string>
     <string name="menu_map">Map</string>
     <string name="menu_out">Log Out</string>
 
@@ -63,8 +65,8 @@
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_nav">NavActivity</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+
+
 
 
 </resources>

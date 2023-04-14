@@ -43,14 +43,14 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.first_item -> {
+            R.id.dash -> {
                 // Handle main screen
                 val newI = Intent(this, MainActivity::class.java )
                 startActivity(newI)
                 drawerLayout.closeDrawer(GravityCompat.START)
                 return true
             }
-            R.id.second_item -> {
+            R.id.pumpList -> {
                 // Handle settings screen
                 drawerLayout.closeDrawer(GravityCompat.START)
                 return true

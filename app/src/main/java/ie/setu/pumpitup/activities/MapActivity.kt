@@ -45,6 +45,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarker
         map.setOnMarkerDragListener(this)
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
     }
+
     override fun onMarkerDrag(p0: Marker) {  }
 
     override fun onMarkerDragEnd(marker: Marker) {

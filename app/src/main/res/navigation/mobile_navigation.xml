@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/main">
+
+    <fragment
+        android:id="@+id/main"
+        android:name="ie.setu.pumpitup.ui.main.MainFragment"
+        android:label="@string/menu_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_nav_home_to_pumpList"
+            app:destination="@id/pumpList" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_map"
+            app:destination="@id/map" />
+        <action
+            android:id="@+id/action_nav_home_to_drive"
+            app:destination="@id/drive" />
+        <action
+            android:id="@+id/action_nav_home_to_logout"
+            app:destination="@id/logout" />
+        <action
+            android:id="@+id/action_nav_home_to_dash"
+            app:destination="@id/dash" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pumpList"
+        android:name="ie.setu.pumpitup.ui.list.PumpListFragment"
+        android:label="@string/menu_pumplist"
+        tools:layout="@layout/fragment_pumplist" >
+        <action
+            android:id="@+id/action_nav_home_to_main"
+            app:destination="@id/main" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_map"
+            app:destination="@id/map" />
+        <action
+            android:id="@+id/action_nav_home_to_drive"
+            app:destination="@id/drive" />
+        <action
+            android:id="@+id/action_nav_home_to_logout"
+            app:destination="@id/logout" />
+        <action
+            android:id="@+id/action_nav_home_to_dash"
+            app:destination="@id/dash" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="ie.setu.pumpitup.ui.map.MapFragment"
+        android:label="@string/menu_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_nav_slideshow_to_nav_main"
+            app:destination="@id/main" />
+        <action
+            android:id="@+id/action_nav_slideshow_to_pumpList"
+            app:destination="@id/pumpList" />
+
+        <action
+            android:id="@+id/action_nav_home_to_drive"
+            app:destination="@id/drive" />
+        <action
+            android:id="@+id/action_nav_home_to_logout"
+            app:destination="@id/logout" />
+        <action
+            android:id="@+id/action_nav_home_to_dash"
+            app:destination="@id/dash" />
+    </fragment>
+</navigation>

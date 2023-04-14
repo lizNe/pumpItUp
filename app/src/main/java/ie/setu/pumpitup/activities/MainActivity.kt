@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         binding.btnAdd.setOnClickListener() {
             pump.station = binding.station.text.toString()
+            pump.station= binding.coursesspinner.selectedItem as String
             pump.petrol = binding.petrol.text.toString().toDouble()
             pump.diesel = binding.diesel.text.toString().toDouble()
             pump.eircode = binding.eircode.text.toString()
@@ -141,7 +142,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 //        ALSO ASSIGN CORRECT PETROL STATION IMAGE TO THAT ITEM ADDED
 
         val spin = findViewById<Spinner>(R.id.coursesspinner)
-        spin.onItemSelectedListener = this
+       // spin.onItemSelectedListener = this
 
         // Create the instance of ArrayAdapter
         // having the list of courses
