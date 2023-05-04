@@ -3,6 +3,7 @@ package ie.setu.pumpitup.models
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import timber.log.Timber.e
 import timber.log.Timber.i
 import java.io.File
 import java.io.IOException
@@ -48,6 +49,10 @@ class PumpItMemStore  : PumpItStore {
         logAll()
     }
 
+    override fun findAllByEmailUser(email: String): List<PumpModel> {
+        return stations.filter{pm -> pm.UserEmail.equals(email)}
+    }
+
     // Load the list of stations from the JSON file
     fun loadStations(context: Context): MutableList<PumpModel> {
         val file = File(context.filesDir, STATIONS_FILE)
@@ -75,6 +80,12 @@ class PumpItMemStore  : PumpItStore {
 
     fun logAll() {
         stations.forEach{ i("$it") }
+    }
+
+
+
+   fun findById(id: Long): PumpModel? {
+        return stations.find { it.id == id }
     }
 }
 

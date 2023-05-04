@@ -3,6 +3,7 @@ package ie.setu.pumpitup.main
 import android.app.Application
 import android.content.Intent
 import android.util.Log.i
+import com.google.firebase.FirebaseApp
 import ie.setu.pumpitup.activities.LoginActivity
 import ie.setu.pumpitup.models.PumpItMemStore
 import ie.setu.pumpitup.models.PumpModel
@@ -12,6 +13,7 @@ import timber.log.Timber.i
 class MainApp : Application() {
 
     val stations = PumpItMemStore()
+
 
 
     override fun onCreate() {

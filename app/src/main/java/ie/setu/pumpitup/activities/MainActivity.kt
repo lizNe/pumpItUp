@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import ie.setu.pumpitup.R
 import ie.setu.pumpitup.models.PumpModel
 import ie.setu.pumpitup.databinding.PumpActivityMainBinding
@@ -31,11 +32,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var pump = PumpModel()
     lateinit var app: MainApp
 
+    private lateinit var firebaseAuth: FirebaseAuth
+
     var courses = arrayOf<String?>("Select Station","Amber", "Apple Green",
         "Circle K", "Inver",
         "Morris", "Shell","Texaco","Top Oil","Emo")
-
-   // var location = Location(52.245696, -7.139102, 15f)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,10 +47,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         binding = PumpActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-////        Map Binding
-      /* binding.stationLocation.setOnClickListener {
-            i ("Set Location Pressed")
-       }*/
+        firebaseAuth = FirebaseAuth.getInstance()
+
+
         registerMapCallback()
         binding.stationLocation.setOnClickListener {
             val location = Location(52.245696, -7.139102, 15f)
@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
         }
-
-
 
 
         app = application as MainApp
@@ -93,6 +91,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             pump.eircode = binding.eircode.text.toString()
             pump.address = binding.address.text.toString()
             pump.image= ImageHashMap.getImage(binding.coursesspinner.selectedItem.toString()).toString()
+
+            pump.UserEmail = firebaseAuth.currentUser.toString()
 
 
 
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 //        ALSO ASSIGN CORRECT PETROL STATION IMAGE TO THAT ITEM ADDED
 
         val spin = findViewById<Spinner>(R.id.coursesspinner)
-       // spin.onItemSelectedListener = this
+        spin.onItemSelectedListener = this
 
         // Create the instance of ArrayAdapter
         // having the list of courses

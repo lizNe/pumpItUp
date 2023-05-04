@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+    <item
+        android:id="@+id/menu_main"
+        android:tint="@color/white"
+        android:icon="@drawable/baseline_menu_24"
+        android:title="@string/menu"
+        android:orderInCategory="1"
+        app:showAsAction="always">
+        <menu>
     <item
         android:id="@+id/item_add"
         android:background="@drawable/button_background"
@@ -9,14 +16,36 @@
         android:title="@string/menu_addPump"
         app:showAsAction="always" />
 
+
+
+    <item
+        android:id="@+id/item_map"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/menu_addMapLoc"
+        app:showAsAction="always" />
+
+            <item
+                android:id="@+id/item_logout"
+                android:icon="@drawable/baseline_logout_24"
+                android:title="@string/menu_out"
+                app:showAsAction="always" />
+
+            <item
+                android:id="@+id/item_driving101"
+                android:icon="@drawable/baseline_directions_car_24"
+                android:title="@string/menu_drive"
+                app:showAsAction="always" />
+
+</menu>
+</item>
+
     <item
         android:id="@+id/action_search"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search"
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView" />
-
-
 </menu>
+
 
 
